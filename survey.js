@@ -13,17 +13,24 @@ const questions = [
   "What's your favourite thing to eat for that meal?",
   "Which sport is your absolute favourite?",
   "What is your superpower? In a few words, tell us what you are amazing at!"
-]
+];
 
 const answers = [];
 
-const ask = (context, q, next) => {
-  context.question(q + ' -> ', (ans) => answers.push(ans));
-  if (next > questions.length) ask(context, q[next], next++);
-}
 
-ask(rl, questions[0], 1);
+const askQuestion = (context, array) => {
+  const head = array[0];
+  if (head) {
+    const tail = array.slice(1);
+    context.question(head + " -> ", ans => {
+      answers.push(ans);
+      askQuestion(context, tail);
+    });
+  } else {
+    context.close();
+    console.log(answers);
+    return;
+  }
+};
 
-console.log(answers);
-
-rl.close();
+askQuestion(rl, questions);
