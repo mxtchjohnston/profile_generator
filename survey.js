@@ -17,6 +17,13 @@ const questions = [
 
 const answers = [];
 
+const zip = (ks, vs) => {
+  const obj = {};
+  for (let i = 0; i < ks.length; i++) {
+    obj[ks[i]] = vs[i];
+  }
+  return obj;
+}
 
 const askQuestion = (context, array) => {
   const head = array[0];
@@ -28,7 +35,8 @@ const askQuestion = (context, array) => {
     });
   } else {
     context.close();
-    console.log(answers);
+    console.log('Thank you for the feedback!');
+    console.table(zip(questions, answers));
     return;
   }
 };
